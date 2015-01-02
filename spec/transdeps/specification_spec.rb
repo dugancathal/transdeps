@@ -24,11 +24,40 @@ describe Transdeps::Specification do
       expect(spec.version).to eq '10.0.0'
     end
   end
-  describe 'equality' do
+
+  describe 'three-quality' do
     it 'is equal when the name and version are equal' do
       version1 = Transdeps::Specification.new('rake', '10.0.0')
       version2 = Transdeps::Specification.new('rake', '10.0.0')
-      expect(version1).to eq version2
+      expect(version1 === version2).to be_truthy
+    end
+  end
+
+  describe 'equality' do
+    it 'is equal when the name, version, and project_path are equal' do
+      version1 = Transdeps::Specification.new('rake', '10.0.0', 'path')
+      version2 = Transdeps::Specification.new('rake', '10.0.0', 'path')
+      expect(version1 === version2).to be_truthy
+    end
+  end
+
+  describe '#same_gem_as?' do
+    it 'returns true when the gem names are the same' do
+      version1 = Transdeps::Specification.new('rake', '10.0.0')
+      version2 = Transdeps::Specification.new('rake', '10.0.0')
+      expect(version1).to be_same_gem_as version2
+    end
+
+    it 'returns true when the gem names are the same and versions are different' do
+      version1 = Transdeps::Specification.new('rake', '10.1.0')
+      version2 = Transdeps::Specification.new('rake', '10.0.0')
+      expect(version1).to be_same_gem_as version2
+    end
+
+    it 'returns false when the gem names are the different' do
+      version1 = Transdeps::Specification.new('rake', '10.0.0')
+      version2 = Transdeps::Specification.new('rack', '10.0.0')
+      expect(version1).to_not be_same_gem_as version2
     end
   end
 end

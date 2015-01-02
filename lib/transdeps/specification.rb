@@ -1,8 +1,16 @@
 module Transdeps
-  class Specification < Struct.new(:name, :version)
-    def self.from_lock(lock)
+  class Specification < Struct.new(:name, :version, :project_path)
+    def self.from_lock(lock, path='')
       match = lock.match(/^(?<name>[\w\-]+) \((?<version>.*)\)/)
-      new(match[:name], match[:version])
+      new(match[:name], match[:version], path)
+    end
+
+    def same_gem_as?(other)
+      name == other.name
+    end
+
+    def ===(other)
+      name == other.name && version == other.version
     end
 
     def to_s
