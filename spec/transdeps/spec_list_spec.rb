@@ -24,6 +24,13 @@ module Transdeps
       expect(list.specs).to eq([Specification.from_lock('rake (10.0.0)', '/path/to')])
     end
 
+    it 'allows findingy by gem name' do
+      generator = double(Bundler::LockfileParser, specs: ['rake (10.0.0)'])
+      list = SpecList.new('/path/to/Gemfile.lock', 'contents', generator)
+      allow(list).to receive(:parser).and_return(generator)
+      expect(list['rake']).to eq(Specification.from_lock('rake (10.0.0)', '/path/to'))
+    end
+
     describe '-=' do
       it 'returns a list of the inconsistencies' do
         ten_dot_oh = Specification.from_lock('rake (10.0.0)', '.')

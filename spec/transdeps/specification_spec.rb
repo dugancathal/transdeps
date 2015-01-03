@@ -25,11 +25,23 @@ describe Transdeps::Specification do
     end
   end
 
-  describe 'three-quality' do
-    it 'is equal when the name and version are equal' do
+  describe 'match-y-ness' do
+    it 'matches when the name is the same' do
       version1 = Transdeps::Specification.new('rake', '10.0.0')
       version2 = Transdeps::Specification.new('rake', '10.0.0')
-      expect(version1 === version2).to be_truthy
+      expect(version1 =~ version2).to be_truthy
+    end
+
+    it 'does not match when the name is the same and the version is different' do
+      version1 = Transdeps::Specification.new('rake', '10.0.0')
+      version2 = Transdeps::Specification.new('rake', '10.1.0')
+      expect(version1 =~ version2).to be_falsey
+    end
+
+    it 'does not care what the project path is' do
+      version1 = Transdeps::Specification.new('rake', '10.0.0', 'path1')
+      version2 = Transdeps::Specification.new('rake', '10.0.0', 'path2')
+      expect(version1 =~ version2).to be_truthy
     end
   end
 

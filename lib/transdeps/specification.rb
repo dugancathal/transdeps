@@ -9,8 +9,8 @@ module Transdeps
       name == other.name
     end
 
-    def ===(other)
-      name == other.name && version == other.version
+    def =~(other)
+      same_gem_as?(other) && version == other.version
     end
 
     def to_s

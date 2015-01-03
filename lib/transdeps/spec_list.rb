@@ -17,12 +17,15 @@ module Transdeps
 
     def -(other)
       specs.map do |spec|
-        if other_spec = other.specs.find {|other_spec| spec.same_gem_as?(other_spec) }
-          unless spec === other_spec
-            Inconsistency.new(spec, other_spec)
-          end
+        next unless other[spec.name]
+        unless spec =~ other[spec.name]
+          Inconsistency.new(spec, other[spec.name])
         end
       end.compact
+    end
+
+    def [](name)
+      specs.find{|spec| spec.name == name }
     end
   end
 end
