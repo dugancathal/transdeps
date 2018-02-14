@@ -30,7 +30,7 @@ require 'transdeps/tasks'
 Then run:
 
 ```bash
-bundle exec rake[/path/to/my/components,/path/to/my/project]
+bundle exec rake transdeps[/path/to/my/components,/path/to/my/project]
 ```
 
 Since you are presumably running this task from the root of your project,
@@ -38,7 +38,7 @@ you can leave the second argument to the Rake task off, and the
 first argument would be a relative path. Something like:
 
 ```bash
-bundle exec rake[components]
+bundle exec rake transdeps[components]
 ```
 
 ## Contributing
