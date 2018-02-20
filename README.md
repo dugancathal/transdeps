@@ -21,6 +21,8 @@ Or install it yourself as:
 
 ## Usage
 
+### Using `rake`
+
 Add this line to application's Rakefile:
 
 ```ruby
@@ -39,6 +41,25 @@ first argument would be a relative path. Something like:
 
 ```bash
 bundle exec rake transdeps[components]
+```
+
+### Using `rspec`
+
+Add this spec:
+
+```ruby
+require "transdeps/cli"
+
+RSpec.describe "Component" do
+  it "uses the same version of dependencies as the ones in the container application" do
+    results = Transdeps::Cli.new("components").run
+    expect(results).to be_empty, failure_message(results)
+  end
+
+  def failure_message(results)
+    (["❌  Dependency inconsistencies found:"] + results).join("\n")
+  end
+end
 ```
 
 ## Contributing
