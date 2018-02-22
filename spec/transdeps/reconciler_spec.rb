@@ -25,5 +25,15 @@ module Transdeps
 
       expect(result).to eq [Inconsistency.new(ten_dot_oh, ten_dot_one)]
     end
+
+    it 'ignores files in components directory' do
+      factory = SpecListFactory.new
+      rec = Reconciler.new(factory)
+      component_dir = double(Dir, children: [DUMMY_APP_PATH + 'components/a-file'])
+
+      result = rec.call(component_dir, DUMMY_APP_PATH)
+
+      expect(result).to be_empty
+    end
   end
 end
