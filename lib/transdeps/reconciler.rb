@@ -1,9 +1,10 @@
+require 'transdeps/component_list_factory'
 require 'transdeps/spec_list_factory'
 require 'transdeps/inconsistency'
 
 module Transdeps
-  class Reconciler < Struct.new(:factory)
-    def initialize(factory=SpecListFactory.new)
+  class Reconciler < Struct.new(:spec_list_factory, :component_list_factory)
+    def initialize(spec_list_factory=SpecListFactory.new, component_list_factory=ComponentListFactory.new)
       super
     end
 
@@ -17,13 +18,12 @@ module Transdeps
     private
 
     def specs_for(dir)
-      factory.call(dir)
+      spec_list_factory.call(dir)
     end
 
     def all_component_specs(component_dir)
-      component_dir
-        .children
-        .select { |filename| File.directory?(filename) }
+      component_list_factory
+        .call(component_dir)
         .map { |dir| specs_for(dir) }
     end
 
