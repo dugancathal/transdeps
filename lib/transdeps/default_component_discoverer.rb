@@ -1,5 +1,5 @@
 module Transdeps
-  class ComponentListFactory
+  class DefaultComponentDiscoverer
     def call(component_dir)
       component_dir
         .children

@@ -1,10 +1,10 @@
 require 'spec_helper'
 require 'tmpdir'
-require 'transdeps/component_list_factory'
+require 'transdeps/default_component_discoverer'
 
 module Transdeps
-  describe ComponentListFactory do
-    subject { Transdeps::ComponentListFactory.new }
+  describe DefaultComponentDiscoverer do
+    subject { Transdeps::DefaultComponentDiscoverer.new }
 
     around(:each) do |example|
       Dir.mktmpdir do |dir|
