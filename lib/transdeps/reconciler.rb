@@ -3,8 +3,8 @@ require 'transdeps/spec_list_factory'
 require 'transdeps/inconsistency'
 
 module Transdeps
-  class Reconciler < Struct.new(:spec_list_factory, :default_component_discoverer)
-    def initialize(spec_list_factory=SpecListFactory.new, default_component_discoverer=DefaultComponentDiscoverer.new)
+  class Reconciler < Struct.new(:spec_list_factory, :component_discoverer)
+    def initialize(spec_list_factory=SpecListFactory.new, component_discoverer=DefaultComponentDiscoverer.new)
       super
     end
 
@@ -22,7 +22,7 @@ module Transdeps
     end
 
     def all_component_specs(component_dir)
-      default_component_discoverer
+      component_discoverer
         .call(component_dir)
         .map { |dir| specs_for(dir) }
     end
