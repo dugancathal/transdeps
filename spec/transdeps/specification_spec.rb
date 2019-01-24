@@ -23,6 +23,13 @@ describe Transdeps::Specification do
       expect(spec.name).to eq 'rake_lib'
       expect(spec.version).to eq '10.0.0'
     end
+
+    it 'works for names with dots' do
+      lock = 'http_parser.rb (0.6.0)'
+      spec = Transdeps::Specification.from_lock(lock)
+      expect(spec.name).to eq 'http_parser.rb'
+      expect(spec.version).to eq '0.6.0'
+    end
   end
 
   describe 'match-y-ness' do
