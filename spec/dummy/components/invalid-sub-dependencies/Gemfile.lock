@@ -15,7 +15,7 @@ GEM
     capybara-webkit (1.1.1)
       capybara (>= 2.0.2, < 2.2.0)
       json
-    json (1.8.1)
+    json (2.3.1)
     mime-types (2.4.3)
     mini_portile2 (2.4.0)
     nokogiri (1.10.7)
